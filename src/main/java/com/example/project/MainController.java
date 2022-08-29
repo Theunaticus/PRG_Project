@@ -38,6 +38,11 @@ public class MainController {
     return "Saved";
   }
 
+  @PostMapping(path = "/error") // Map ONLY POST Requests
+  public @ResponseBody String DisplayError(@RequestParam String message) {
+    return message;
+  }
+
   @PostMapping(path = "/addstudent") // Map ONLY POST Requests
   public @ResponseBody String addNewStudent(@RequestParam String name, @RequestParam String address,
       @RequestParam String email, @RequestParam String password) {
