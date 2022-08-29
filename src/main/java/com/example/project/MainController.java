@@ -83,7 +83,12 @@ public class MainController {
   public @ResponseBody
   static Iterable<Administrator> getAllAdmins() {
     // This returns a JSON or XML with the admins
-    return adminRepository.findAll();
+    try {
+      return adminRepository.findAll();
+    } catch (Exception e) {
+      addNewAdmin("admin", "admin", "admin");
+      return adminRepository.findAll();
+    } 
   }
 
   public void DeleteAdmin ()  {

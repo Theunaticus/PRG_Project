@@ -9,5 +9,5 @@ import com.example.project.Administrator;
 // CRUD refers Create, Read, Update, Delete
 
 public interface AdministratorRepository extends CrudRepository<Administrator, Integer> {
-
+    
 }
