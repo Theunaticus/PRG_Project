@@ -15,23 +15,23 @@ public class StudentView extends JFrame {
 
     final private Font mainFont = new Font("Arial", Font.PLAIN, 20);
 
-    JTextField student_IDField = new JTextField("Student ID");
+    static JTextField student_IDField = new JTextField("Student ID");
     JLabel student_IDLabel = new JLabel("Student ID", JLabel.CENTER);
 
-    JTextField student_nameField = new JTextField("Student name");
+    static JTextField student_nameField = new JTextField("Student name");
     JLabel student_nameLabel = new JLabel("Student name", JLabel.CENTER);
 
-    JTextField student_addressField = new JTextField("Student address");
+    static JTextField student_addressField = new JTextField("Student address");
     JLabel student_addressLabel = new JLabel("Student address", JLabel.CENTER);
 
-    JTextField student_emailField = new JTextField("Student email");
+    static JTextField student_emailField = new JTextField("Student email");
     JLabel student_emailLabel = new JLabel("Student email", JLabel.CENTER);
 
-    JTextField student_passwordField = new JTextField("Student password");
+    static JTextField student_passwordField = new JTextField("Student password");
     JLabel student_passwordLabel = new JLabel("Student password", JLabel.CENTER);
 
     public StudentView() {
-
+        DisplayFirstRecord();
         // -------------Editable Items------------------
         student_IDField.setFont(mainFont);
         student_IDLabel.setFont(mainFont);
@@ -242,48 +242,52 @@ public class StudentView extends JFrame {
         StudentArray = new Student[5];
         Student stud = new Student();
         stud.SetId(1);
-        stud.SetName("Admin");
-        stud.SetAddress("Admin");
-        stud.SetEmail("Admin");
-        stud.SetPassword("Admin");
+        stud.SetName("Jonathan");
+        stud.SetAddress("64 Main St");
+        stud.SetEmail("Jonathan@gmail.com");
+        stud.SetPassword("Secret");
         StudentArray[0] = stud;
 
         stud = new Student();
-        stud.SetId(1);
-        stud.SetName("Admin");
-        stud.SetAddress("Admin");
-        stud.SetEmail("Admin");
-        stud.SetPassword("Admin");
+        stud.SetId(2);
+        stud.SetName("Erica");
+        stud.SetAddress("55 Main St");
+        stud.SetEmail("Erica@gmail.com");
+        stud.SetPassword("Cheesecake4life");
         StudentArray[1] = stud;
 
         stud = new Student();
-        stud.SetId(1);
-        stud.SetName("Admin");
-        stud.SetAddress("Admin");
-        stud.SetEmail("Admin");
-        stud.SetPassword("Admin");
+        stud.SetId(3);
+        stud.SetName("Hernando");
+        stud.SetAddress("66 Main St");
+        stud.SetEmail("Hernando@gmail.com");
+        stud.SetPassword("Kingston");
         StudentArray[2] = stud;
 
         stud = new Student();
-        stud.SetId(1);
-        stud.SetName("Admin");
-        stud.SetAddress("Admin");
-        stud.SetEmail("Admin");
-        stud.SetPassword("Admin");
+        stud.SetId(4);
+        stud.SetName("Steve");
+        stud.SetAddress("77 Main St");
+        stud.SetEmail("Steve@gmail.com");
+        stud.SetPassword("Capn_America");
         StudentArray[3] = stud;
 
         stud = new Student();
-        stud.SetId(1);
-        stud.SetName("Admin");
-        stud.SetAddress("Admin");
-        stud.SetEmail("Admin");
-        stud.SetPassword("Admin");
+        stud.SetId(5);
+        stud.SetName("Roderick");
+        stud.SetAddress("88 Main St");
+        stud.SetEmail("Roderick@gmail.com");
+        stud.SetPassword("GoT");
         StudentArray[4] = stud;
 
         QuickTextSet(0);
     }
 
     public static void QuickTextSet(int num){
-
-}
+        student_IDField.setText(String.valueOf(StudentArray[num].GetId()));
+        student_nameField.setText(StudentArray[num].GetName());
+        student_passwordField.setText(StudentArray[num].GetPassword());
+        student_addressField.setText(StudentArray[num].GetAddress());
+        student_emailField.setText(StudentArray[num].GetEmail());
+    }
 }
