@@ -25,7 +25,7 @@ public class MainController {
   @Autowired
   private StudentRepository studentRepository;
   @Autowired
-  private static AdministratorRepository adminRepository;
+  private AdministratorRepository adminRepository;
 
   @PostMapping(path = "/addregister") // Map ONLY POST Requests
   public @ResponseBody String addNewRegister(@RequestParam String name, @RequestParam String address,
@@ -56,7 +56,7 @@ public class MainController {
 
   @PostMapping(path = "/addadmin") // Map ONLY POST Requests
   public @ResponseBody
-  static String addNewAdmin(@RequestParam String name, @RequestParam String password,
+   String addNewAdmin(@RequestParam String name, @RequestParam String password,
       @RequestParam String contact) {
 
     Administrator n = new Administrator();
@@ -81,7 +81,7 @@ public class MainController {
 
   @GetMapping(path = "/alladmins")
   public @ResponseBody
-  static Iterable<Administrator> getAllAdmins() {
+   Iterable<Administrator> getAllAdmins() {
     // This returns a JSON or XML with the admins
     try {
       return adminRepository.findAll();
