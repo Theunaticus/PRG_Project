@@ -1,4 +1,4 @@
-package com.project.accessingdatamysql.DataObjects;
+package accessingdatamysql.DataObjects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

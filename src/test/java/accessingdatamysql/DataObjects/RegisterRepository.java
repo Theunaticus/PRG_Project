@@ -1,4 +1,4 @@
-package com.project.accessingdatamysql.DataObjects;
+package accessingdatamysql.DataObjects;
 
 import org.springframework.data.repository.CrudRepository;
 
@@ -8,5 +8,7 @@ import com.example.accessingdatamysql.User;
 // CRUD refers Create, Read, Update, Delete
 
 public interface RegisterRepository extends CrudRepository<Register, Integer> {
+
+    void save(Register n);
 
 }

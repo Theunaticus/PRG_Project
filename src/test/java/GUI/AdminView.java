@@ -1,8 +1,9 @@
-package com.project.GUI;
+package GUI;
 
 import javax.swing.JFrame;
 
-import project.accessingdatamysql.DataObjects.*;
+import accessingdatamysql.DataObjects.*;
+
 
 import javax.swing.*;
 import java.awt.*;
