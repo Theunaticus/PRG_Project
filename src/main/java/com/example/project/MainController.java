@@ -15,6 +15,7 @@ public class MainController {
   public  static MainController current;
   public  MainController  ()  {
     current = this;
+
   }
 
   @Autowired
@@ -85,6 +86,7 @@ public class MainController {
   public @ResponseBody
    Iterable<Administrator> getAllAdmins() {
     // This returns a JSON or XML with the admins
+    
     try {
       return adminRepository.findAll();
     } catch (Exception e) {
