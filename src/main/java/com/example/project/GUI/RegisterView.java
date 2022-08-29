@@ -1,27 +1,37 @@
 package com.example.project.GUI;
 
 import javax.swing.JFrame;
+import javax.swing.text.JTextComponent;
+
+import com.example.project.MainController;
+import com.example.project.Register;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class RegisterView extends JFrame {
+    private static final JTextComponent Register_PasswordField = null;
+    static Register[] RegisterArray = new Register[40];
+    static int Position = 0;
+
+
     final private Font mainFont = new Font("Arial", Font.PLAIN, 20);
-    JTextField Register_IDField = new JTextField("Register ID");
+    static JTextField Register_IDField = new JTextField("Register ID");
     JLabel Register_IDLabel = new JLabel("Register ID", JLabel.CENTER);
 
-    JTextField Register_nameField = new JTextField("Register name");
+    static JTextField Register_nameField = new JTextField("Register name");
     JLabel Register_nameLabel = new JLabel("Register name", JLabel.CENTER);
 
-    JTextField Register_addressField = new JTextField("Register address");
+    static JTextField Register_addressField = new JTextField("Register address");
     JLabel Register_addressLabel = new JLabel("Register address", JLabel.CENTER);
 
-    JTextField Register_emailField = new JTextField("Register email");
+    static JTextField Register_emailField = new JTextField("Register email");
     JLabel Register_emailLabel = new JLabel("Register email", JLabel.CENTER);
 
     JTextField Register_passwordField = new JTextField("Register email");
     JLabel Register_passwordLabel = new JLabel("Register email", JLabel.CENTER);
 
-    JTextField Course_NameField = new JTextField("Course Name");
+    static JTextField Course_NameField = new JTextField("Course Name");
     JLabel Course_NameLabel = new JLabel("Course Name", JLabel.CENTER);
 
     public RegisterView() {
@@ -83,34 +93,30 @@ public class RegisterView extends JFrame {
         JButton editButton = new JButton("Confirm Edit");
         editButton.setFont(mainFont);
         editButton.addActionListener(arg0 -> {
-            /* Add SQL code to see if the first and last names are inside the database */
+            ReplaceInfo();
 
         });
         JButton NextButton = new JButton("Next record");
         NextButton.setFont(mainFont);
         NextButton.addActionListener(arg0 -> {
-            /* Add SQL code to see if the first and last names are inside the database */
+            MoveToRecord(1);
         });
         JButton PreviousButton = new JButton("Previous record");
         PreviousButton.setFont(mainFont);
         PreviousButton.addActionListener(arg0 -> {
-            /* Add SQL code to see if the first and last names are inside the database */
+            MoveToRecord(-1);
         });
         JButton DeleteButton = new JButton("Delete record");
         DeleteButton.setFont(mainFont);
         DeleteButton.addActionListener(arg0 -> {
-            /* Add SQL code to see if the first and last names are inside the database */
+            DeleteMember();
         });
         JButton AddButton = new JButton("Add record");
         AddButton.setFont(mainFont);
         AddButton.addActionListener(arg0 -> {
-            /* Add SQL code to see if the first and last names are inside the database */
+            addNewRegister();
         });
-        JButton SearchButton = new JButton("Search record");
-        SearchButton.setFont(mainFont);
-        SearchButton.addActionListener(arg0 -> {
-            /* Add SQL code to see if the first and last names are inside the database */
-        });
+
         JButton MainMenuButton = new JButton("Main Menu");
         MainMenuButton.setFont(mainFont);
         MainMenuButton.addActionListener(arg0 -> {
@@ -132,7 +138,7 @@ public class RegisterView extends JFrame {
         // -------------Top Buttons------------------
         JPanel TopButtonsPanel = new JPanel();
         TopButtonsPanel.setLayout(new FlowLayout());
-        TopButtonsPanel.add(SearchButton);
+
         TopButtonsPanel.add(MainMenuButton);
 
         // -------------Main Piece------------------
@@ -152,5 +158,160 @@ public class RegisterView extends JFrame {
         setVisible(true);
 
     }
+
+
+
+
+    public void DeleteMember(){
+        Register[] registerArrayReplacement = new Register[RegisterArray.length-1];
+        RegisterArray[Position] = null;
+        
+        for (int i = 0; i < RegisterArray.length; i++) {
+            if  (RegisterArray[i] != null) {
+                registerArrayReplacement[i] = RegisterArray[i];
+            }
+            registerArrayReplacement[i] = RegisterArray[i];
+        }
+        RegisterArray = registerArrayReplacement;
+
+
+    }
+
+    public void ReplaceInfo(){
+        RegisterArray[Position].SetId( Integer.parseInt(Register_IDField.getText()) );
+        RegisterArray[Position].SetName(Register_nameField.getText());
+        RegisterArray[Position].SetPassword(Register_PasswordField.getText());
+        RegisterArray[Position].SetAddress(Register_addressField.getText());
+        RegisterArray[Position].SetEmail(Register_emailField.getText());
+        RegisterArray[Position].SetCourse(Course_NameField.getText());
+    }
+
+    public void addNewRegister(){
+        try {
+            MainController controller = new MainController();
+            controller.addNewRegister( Register_nameField.getText(), Register_addressField.getText(), Register_emailField.getText(),
+                    Register_PasswordField.getText(), Course_NameField.getText() );
+        } catch (NullPointerException e) {
+            System.out.println("Error: " + e.getMessage());
+            AddFakeMember();
+        } 
+        
+    }
+
+    void AddFakeMember(){
+        Register[] registerArrayReplacement = new Register[RegisterArray.length+1];
+        Register register = new Register();
+        register.SetId( Integer.parseInt(Register_IDField.getText()) );
+        register.SetName(Register_nameField.getText());
+        register.SetPassword(Register_PasswordField.getText());
+        register.SetAddress(Register_addressField.getText());
+        register.SetEmail(Register_emailField.getText());
+        register.SetCourse(Course_NameField.getText());
+       
+        for (int i = 0; i < RegisterArray.length; i++) {
+            registerArrayReplacement[i] = RegisterArray[i];
+        }
+        registerArrayReplacement[RegisterArray.length] = register;
+        RegisterArray = registerArrayReplacement;
+    }
+
+    public void MoveToRecord(int num){
+        if (RegisterArray.length > 0) {
+            Position += num;
+            if (Position < 0) {
+                Position = RegisterArray.length - 1;
+                while(RegisterArray[Position] == null){
+                    Position--;
+                }
+            }else if(Position>=RegisterArray.length-1){
+                Position = 0;
+            }
+            QuickTextSet(Position);
+        }
+    }
+
+    public void DisplayFirstRecord() {
+        //a for each loop using the iterable AdminList
+        //set the text fields to the first record in the list
+        MainController mainController = new MainController();
+        try {
+            Iterable<Register> RegisterList = mainController.getAllRegisters();
+            
+            int count = 0;
+            if(RegisterArray.length<=0){
+                System.out.println("No records");
+                GenerateFakeValues();
+            }else{
+                for (Register register : RegisterList) {
+                    RegisterArray[count] = register;
+                    count++;
+                }
+                QuickTextSet(0);
+
+            }
+        } catch (NullPointerException e) {
+            GenerateFakeValues();
+        }
+        
+        
+            
+    }
+
+    void GenerateFakeValues(){
+        RegisterArray = new Register[5];
+        Register register = new Register();
+        register.SetId(1);
+        register.SetName("Dave");
+        register.SetPassword("Password");
+        register.SetAddress("65 Main Street");
+        register.SetEmail("Dave@gmail.com");
+        register.SetCourse("Prg");
+        RegisterArray[0] = register;
+        Register register1 = new Register();
+        register1.SetId(2);
+        register1.SetName("Steve");
+        register1.SetPassword("CheesNugget");
+        register1.SetAddress("89 north street");
+        register1.SetEmail("Steve@gmail.com");
+        register1.SetCourse("Prg");
+        RegisterArray[1] = register1;
+        Register register2 = new Register();
+        register2.SetId(3);
+        register2.SetName("Bob");
+        register2.SetPassword("RickRoll68");
+        register2.SetAddress("92 south street");
+        register2.SetEmail("Bob@gmail.com");
+        register2.SetCourse("Prg");
+        RegisterArray[2] = register2;
+        Register register3 = new Register();
+        register3.SetId(4);
+        register3.SetName("Rick");
+        register3.SetPassword("1234566");
+        register3.SetAddress("92 west street");
+        register3.SetEmail("Rick@gmail.com");
+        register3.SetCourse("Prg");
+        RegisterArray[3] = register3;
+        Register register4 = new Register();
+        register3.SetId(5);
+        register3.SetName("Olivar");
+        register3.SetPassword("hawian9827");
+        register3.SetAddress("1 east street");
+        register3.SetEmail("Olivar@gmail.com");
+        register3.SetCourse("Prg");
+        RegisterArray[4] = register4;
+
+        QuickTextSet(0);
+    }
+
+    public static void QuickTextSet(int num){
+        Register_IDField.setText(String.valueOf(RegisterArray[num].GetId()) );
+        Register_nameField.setText(RegisterArray[num].GetName());
+        Register_PasswordField.setText(RegisterArray[num].GetPassword());
+        Register_addressField.setText(RegisterArray[num].GetAddress());
+        Register_emailField.setText(RegisterArray[num].GetEmail());
+        Course_NameField.setText(RegisterArray[num].GetCourse());
+        
+    }
+       
 
 }

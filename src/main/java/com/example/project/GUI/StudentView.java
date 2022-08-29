@@ -2,10 +2,16 @@ package com.example.project.GUI;
 
 import javax.swing.JFrame;
 
+import com.example.project.Student;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class StudentView extends JFrame {
+    static Student[] AdminArray = new Student[40];
+    static int Position = 0;
+
+
     final private Font mainFont = new Font("Arial", Font.PLAIN, 20);
 
     JTextField student_IDField = new JTextField("Student ID");
@@ -98,11 +104,6 @@ public class StudentView extends JFrame {
         AddButton.addActionListener(arg0 -> {
             /* Add SQL code to see if the first and last names are inside the database */
         });
-        JButton SearchButton = new JButton("Search record");
-        SearchButton.setFont(mainFont);
-        SearchButton.addActionListener(arg0 -> {
-            /* Add SQL code to see if the first and last names are inside the database */
-        });
         JButton MainMenuButton = new JButton("Main Menu");
         MainMenuButton.setFont(mainFont);
         MainMenuButton.addActionListener(arg0 -> {
@@ -124,7 +125,6 @@ public class StudentView extends JFrame {
         // -------------Top Buttons------------------
         JPanel TopButtonsPanel = new JPanel();
         TopButtonsPanel.setLayout(new FlowLayout());
-        TopButtonsPanel.add(SearchButton);
         TopButtonsPanel.add(MainMenuButton);
 
         // -------------Main Piece------------------
@@ -144,5 +144,135 @@ public class StudentView extends JFrame {
         setVisible(true);
 
     }
+
+
+
+
+    public void DeleteMember(){
+        Administrator[] AdminArrayReplacement = new Administrator[AdminArray.length-1];
+        AdminArray[Position] = null;
+        
+        for (int i = 0; i < AdminArray.length; i++) {
+            if  (AdminArray[i] != null) {
+                AdminArrayReplacement[i] = AdminArray[i];
+            }
+            AdminArrayReplacement[i] = AdminArray[i];
+        }
+        AdminArray = AdminArrayReplacement;
+
+
+    }
+
+    public void ReplaceInfo(){
+        AdminArray[Position].SetId( Integer.parseInt(Admin_IDField.getText()) );
+        AdminArray[Position].SetName(Admin_nameField.getText());
+        AdminArray[Position].SetPassword(Admin_PasswordField.getText());
+        AdminArray[Position].SetContact(Admin_ContactField.getText());
+    }
+
+    public void AddNewAdmin(){
+        try {
+            MainController controller = new MainController();
+            controller.addNewAdmin( Admin_nameField.getText(), Admin_PasswordField.getText(), Admin_ContactField.getText());
+        } catch (NullPointerException e) {
+            System.out.println("Error: " + e.getMessage());
+            AddFakeMember();
+        } 
+        
+    }
+
+    void AddFakeMember(){
+        Administrator[] AdminArrayReplacement = new Administrator[AdminArray.length+1];
+        Administrator admin = new Administrator();
+        admin.SetId(Integer.parseInt( Admin_IDField.getText()) );
+        admin.SetName(Admin_nameField.getText());
+        admin.SetPassword(Admin_PasswordField.getText());
+        admin.SetContact(Admin_ContactField.getText());
+        for (int i = 0; i < AdminArray.length; i++) {
+            AdminArrayReplacement[i] = AdminArray[i];
+        }
+        AdminArrayReplacement[AdminArray.length] = admin;
+        AdminArray = AdminArrayReplacement;
+    }
+
+    public void MoveToRecord(int num){
+        if (AdminArray.length > 0) {
+            Position += num;
+            if (Position < 0) {
+                Position = AdminArray.length - 1;
+                while(AdminArray[Position] == null){
+                    Position--;
+                }
+            }else if(Position>=AdminArray.length-1){
+                Position = 0;
+            }
+            QuickTextSet(Position);
+        }
+    }
+
+    public void DisplayFirstRecord() {
+        //a for each loop using the iterable AdminList
+        //set the text fields to the first record in the list
+        MainController mainController = new MainController();
+        try {
+            Iterable<Administrator> AdminList = mainController.getAllAdmins();
+            
+            int count = 0;
+            if(AdminArray.length<=0){
+                System.out.println("No records");
+                GenerateFakeValues();
+            }else{
+                for (Administrator admin : AdminList) {
+                    AdminArray[count] = admin;
+                    count++;
+                }
+                QuickTextSet(0);
+
+            }
+        } catch (NullPointerException e) {
+            GenerateFakeValues();
+        }
+        
+        
+            
+    }
+
+    void GenerateFakeValues(){
+        AdminArray = new Administrator[5];
+        Administrator admin = new Administrator();
+        admin.SetId(1);
+        admin.SetName("Admin");
+        admin.SetPassword("Admin");
+        admin.SetContact("Admin");
+        AdminArray[0] = admin;
+        Administrator admin1 = new Administrator();
+        admin1.SetId(2);
+        admin1.SetName("James");
+        admin1.SetPassword("Parley");
+        admin1.SetContact("Admin");
+        AdminArray[1] = admin1;
+        Administrator admin2 = new Administrator();
+        admin2.SetId(3);
+        admin2.SetName("Jonathan");
+        admin2.SetPassword("steel");
+        admin2.SetContact("Admin");
+        AdminArray[2] = admin2;
+        Administrator admin3 = new Administrator();
+        admin3.SetId(4);
+        admin3.SetName("Avery");
+        admin3.SetPassword("12345");
+        admin3.SetContact("Admin");
+        AdminArray[3] = admin3;
+        Administrator admin4 = new Administrator();
+        admin4.SetId(5);
+        admin4.SetName("King");
+        admin4.SetPassword("Of The wordl");
+        admin4.SetContact("Admin");
+        AdminArray[4] = admin4;
+
+        QuickTextSet(0);
+    }
+
+    public static void QuickTextSet(int num){
 
 }
