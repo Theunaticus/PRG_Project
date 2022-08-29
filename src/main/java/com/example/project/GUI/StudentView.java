@@ -2,13 +2,14 @@ package com.example.project.GUI;
 
 import javax.swing.JFrame;
 
+import com.example.project.MainController;
 import com.example.project.Student;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class StudentView extends JFrame {
-    static Student[] AdminArray = new Student[40];
+    static Student[] StudentArray = new Student[40];
     static int Position = 0;
 
 
@@ -26,8 +27,8 @@ public class StudentView extends JFrame {
     JTextField student_emailField = new JTextField("Student email");
     JLabel student_emailLabel = new JLabel("Student email", JLabel.CENTER);
 
-    JTextField student_passwordField = new JTextField("Student email");
-    JLabel student_passwordLabel = new JLabel("Student email", JLabel.CENTER);
+    JTextField student_passwordField = new JTextField("Student password");
+    JLabel student_passwordLabel = new JLabel("Student password", JLabel.CENTER);
 
     public StudentView() {
 
@@ -137,7 +138,7 @@ public class StudentView extends JFrame {
         MainPanel.add(CenterButtonsPanel);
 
         // -------------Frame------------------
-        setTitle("Admin");
+        setTitle("Student");
         setSize(600, 500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         add(MainPanel);
@@ -149,31 +150,32 @@ public class StudentView extends JFrame {
 
 
     public void DeleteMember(){
-        Administrator[] AdminArrayReplacement = new Administrator[AdminArray.length-1];
-        AdminArray[Position] = null;
+        Student[] StudentArrayReplacement = new Student[StudentArray.length-1];
+        StudentArray[Position] = null;
         
-        for (int i = 0; i < AdminArray.length; i++) {
-            if  (AdminArray[i] != null) {
-                AdminArrayReplacement[i] = AdminArray[i];
+        for (int i = 0; i < StudentArray.length; i++) {
+            if  (StudentArray[i] != null) {
+                StudentArrayReplacement[i] = StudentArray[i];
             }
-            AdminArrayReplacement[i] = AdminArray[i];
+            StudentArrayReplacement[i] = StudentArray[i];
         }
-        AdminArray = AdminArrayReplacement;
+        StudentArray = StudentArrayReplacement;
 
 
     }
 
     public void ReplaceInfo(){
-        AdminArray[Position].SetId( Integer.parseInt(Admin_IDField.getText()) );
-        AdminArray[Position].SetName(Admin_nameField.getText());
-        AdminArray[Position].SetPassword(Admin_PasswordField.getText());
-        AdminArray[Position].SetContact(Admin_ContactField.getText());
+        StudentArray[Position].SetId( Integer.parseInt(student_IDField.getText()) );
+        StudentArray[Position].SetName(student_nameField.getText());
+        StudentArray[Position].SetPassword(student_passwordField.getText());
+        StudentArray[Position].SetEmail(student_emailField.getText());
+        StudentArray[Position].SetAddress(student_addressField.getText());
     }
 
-    public void AddNewAdmin(){
+    public void AddNewStudent(){
         try {
             MainController controller = new MainController();
-            controller.addNewAdmin( Admin_nameField.getText(), Admin_PasswordField.getText(), Admin_ContactField.getText());
+            controller.addNewStudent( student_nameField.getText(), student_addressField.getText(), student_emailField.getText(),student_passwordField.getText());
         } catch (NullPointerException e) {
             System.out.println("Error: " + e.getMessage());
             AddFakeMember();
@@ -182,28 +184,29 @@ public class StudentView extends JFrame {
     }
 
     void AddFakeMember(){
-        Administrator[] AdminArrayReplacement = new Administrator[AdminArray.length+1];
-        Administrator admin = new Administrator();
-        admin.SetId(Integer.parseInt( Admin_IDField.getText()) );
-        admin.SetName(Admin_nameField.getText());
-        admin.SetPassword(Admin_PasswordField.getText());
-        admin.SetContact(Admin_ContactField.getText());
-        for (int i = 0; i < AdminArray.length; i++) {
-            AdminArrayReplacement[i] = AdminArray[i];
+        Student[] StudentArrayReplacement = new Student[StudentArray.length+1];
+        Student stud = new Student();
+        stud.SetId( Integer.parseInt(student_IDField.getText()) );
+        stud.SetName(student_nameField.getText());
+        stud.SetPassword(student_passwordField.getText());
+        stud.SetEmail(student_emailField.getText());
+        stud.SetAddress(student_addressField.getText());
+        for (int i = 0; i < StudentArray.length; i++) {
+            StudentArrayReplacement[i] = StudentArray[i];
         }
-        AdminArrayReplacement[AdminArray.length] = admin;
-        AdminArray = AdminArrayReplacement;
+        StudentArrayReplacement[StudentArray.length] = stud;
+        StudentArray = StudentArrayReplacement;
     }
 
     public void MoveToRecord(int num){
-        if (AdminArray.length > 0) {
+        if (StudentArray.length > 0) {
             Position += num;
             if (Position < 0) {
-                Position = AdminArray.length - 1;
-                while(AdminArray[Position] == null){
+                Position = StudentArray.length - 1;
+                while(StudentArray[Position] == null){
                     Position--;
                 }
-            }else if(Position>=AdminArray.length-1){
+            }else if(Position>=StudentArray.length-1){
                 Position = 0;
             }
             QuickTextSet(Position);
@@ -215,16 +218,15 @@ public class StudentView extends JFrame {
         //set the text fields to the first record in the list
         MainController mainController = new MainController();
         try {
-            Iterable<Administrator> AdminList = mainController.getAllAdmins();
+            Iterable<Student> StudentList = mainController.getAllStudents();
             
             int count = 0;
-            if(AdminArray.length<=0){
+            if(StudentArray.length<=0){
                 System.out.println("No records");
                 GenerateFakeValues();
             }else{
-                for (Administrator admin : AdminList) {
-                    AdminArray[count] = admin;
-                    count++;
+                for (Student stud : StudentList) {
+                    StudentArray[count] = stud;
                 }
                 QuickTextSet(0);
 
@@ -238,41 +240,51 @@ public class StudentView extends JFrame {
     }
 
     void GenerateFakeValues(){
-        AdminArray = new Administrator[5];
-        Administrator admin = new Administrator();
-        admin.SetId(1);
-        admin.SetName("Admin");
-        admin.SetPassword("Admin");
-        admin.SetContact("Admin");
-        AdminArray[0] = admin;
-        Administrator admin1 = new Administrator();
-        admin1.SetId(2);
-        admin1.SetName("James");
-        admin1.SetPassword("Parley");
-        admin1.SetContact("Admin");
-        AdminArray[1] = admin1;
-        Administrator admin2 = new Administrator();
-        admin2.SetId(3);
-        admin2.SetName("Jonathan");
-        admin2.SetPassword("steel");
-        admin2.SetContact("Admin");
-        AdminArray[2] = admin2;
-        Administrator admin3 = new Administrator();
-        admin3.SetId(4);
-        admin3.SetName("Avery");
-        admin3.SetPassword("12345");
-        admin3.SetContact("Admin");
-        AdminArray[3] = admin3;
-        Administrator admin4 = new Administrator();
-        admin4.SetId(5);
-        admin4.SetName("King");
-        admin4.SetPassword("Of The wordl");
-        admin4.SetContact("Admin");
-        AdminArray[4] = admin4;
+        StudentArray = new Student[5];
+        Student stud = new Student();
+        stud.SetId(1);
+        stud.SetName("Admin");
+        stud.SetAddress("Admin");
+        stud.SetEmail("Admin");
+        stud.SetPassword("Admin");
+        StudentArray[0] = stud;
+
+        stud = new Student();
+        stud.SetId(1);
+        stud.SetName("Admin");
+        stud.SetAddress("Admin");
+        stud.SetEmail("Admin");
+        stud.SetPassword("Admin");
+        StudentArray[1] = stud;
+
+        stud = new Student();
+        stud.SetId(1);
+        stud.SetName("Admin");
+        stud.SetAddress("Admin");
+        stud.SetEmail("Admin");
+        stud.SetPassword("Admin");
+        StudentArray[2] = stud;
+
+        stud = new Student();
+        stud.SetId(1);
+        stud.SetName("Admin");
+        stud.SetAddress("Admin");
+        stud.SetEmail("Admin");
+        stud.SetPassword("Admin");
+        StudentArray[3] = stud;
+
+        stud = new Student();
+        stud.SetId(1);
+        stud.SetName("Admin");
+        stud.SetAddress("Admin");
+        stud.SetEmail("Admin");
+        stud.SetPassword("Admin");
+        StudentArray[4] = stud;
 
         QuickTextSet(0);
     }
 
     public static void QuickTextSet(int num){
 
+}
 }

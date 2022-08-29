@@ -17,6 +17,7 @@ public class MainController {
   public  static MainController current;
   public  MainController  ()  {
     current = this;
+
   }
 
   @Autowired
@@ -38,6 +39,11 @@ public class MainController {
     n.SetCourse(course_name);
     registerRepository.save(n);
     return "Saved";
+  }
+
+  @PostMapping(path = "/error") // Map ONLY POST Requests
+  public @ResponseBody String DisplayError(@RequestParam String message) {
+    return message;
   }
 
   @PostMapping(path = "/addstudent") // Map ONLY POST Requests
@@ -82,6 +88,7 @@ public class MainController {
   public @ResponseBody
    Iterable<Administrator> getAllAdmins() {
     // This returns a JSON or XML with the admins
+    
     try {
       return adminRepository.findAll();
     } catch (Exception e) {
