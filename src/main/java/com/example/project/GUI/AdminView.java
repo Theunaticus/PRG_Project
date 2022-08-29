@@ -7,7 +7,6 @@ import com.example.project.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Iterator;
 
 public class AdminView extends JFrame {
      

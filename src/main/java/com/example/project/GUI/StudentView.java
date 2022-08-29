@@ -82,28 +82,27 @@ public class StudentView extends JFrame {
         JButton editButton = new JButton("Confirm Edit");
         editButton.setFont(mainFont);
         editButton.addActionListener(arg0 -> {
-            /* Add SQL code to see if the first and last names are inside the database */
-
+            ReplaceInfo();
         });
         JButton NextButton = new JButton("Next record");
         NextButton.setFont(mainFont);
         NextButton.addActionListener(arg0 -> {
-            /* Add SQL code to see if the first and last names are inside the database */
+            MoveToRecord(1);
         });
         JButton PreviousButton = new JButton("Previous record");
         PreviousButton.setFont(mainFont);
         PreviousButton.addActionListener(arg0 -> {
-            /* Add SQL code to see if the first and last names are inside the database */
+            MoveToRecord(-1);
         });
         JButton DeleteButton = new JButton("Delete record");
         DeleteButton.setFont(mainFont);
         DeleteButton.addActionListener(arg0 -> {
-            /* Add SQL code to see if the first and last names are inside the database */
+            DeleteMember();
         });
         JButton AddButton = new JButton("Add record");
         AddButton.setFont(mainFont);
         AddButton.addActionListener(arg0 -> {
-            /* Add SQL code to see if the first and last names are inside the database */
+            AddNewStudent();
         });
         JButton MainMenuButton = new JButton("Main Menu");
         MainMenuButton.setFont(mainFont);
