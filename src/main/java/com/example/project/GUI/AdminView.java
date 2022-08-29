@@ -2,8 +2,6 @@ package com.example.project.GUI;
 
 import javax.swing.JFrame;
 
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties.Admin;
-
 import com.example.project.*;
 
 
