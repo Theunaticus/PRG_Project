@@ -28,8 +28,8 @@ public class RegisterView extends JFrame {
     static JTextField Register_emailField = new JTextField("Register email");
     JLabel Register_emailLabel = new JLabel("Register email", JLabel.CENTER);
 
-    JTextField Register_passwordField = new JTextField("Register email");
-    JLabel Register_passwordLabel = new JLabel("Register email", JLabel.CENTER);
+    static JTextField Register_passwordField = new JTextField("Register password");
+    JLabel Register_passwordLabel = new JLabel("Register password", JLabel.CENTER);
 
     static JTextField Course_NameField = new JTextField("Course Name");
     JLabel Course_NameLabel = new JLabel("Course Name", JLabel.CENTER);
