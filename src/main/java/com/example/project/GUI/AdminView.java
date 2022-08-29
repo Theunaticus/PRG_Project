@@ -73,7 +73,7 @@ public class AdminView extends JFrame {
         JButton editButton = new JButton("Confirm Edit");
         editButton.setFont(mainFont);
         editButton.addActionListener(arg0 -> {
-            /* Add SQL code to see if the first and last names are inside the database */
+            ReplaceInfo();
         });
         JButton NextButton = new JButton("Next record");
         NextButton.setFont(mainFont);
@@ -88,18 +88,12 @@ public class AdminView extends JFrame {
         JButton DeleteButton = new JButton("Delete record");
         DeleteButton.setFont(mainFont);
         DeleteButton.addActionListener(arg0 -> {
-            /* Add SQL code to see if the first and last names are inside the database */
+            DeleteMember();
         });
         JButton AddButton = new JButton("Add record");
         AddButton.setFont(mainFont);
         AddButton.addActionListener(arg0 -> {
-            /* Add SQL code to see if the first and last names are inside the database */
-        });
-        JButton SearchButton = new JButton("Search record");
-        SearchButton.setFont(mainFont);
-        SearchButton.addActionListener(arg0 -> {
-            /* Add SQL code to see if the first and last names are inside the database */
-
+            AddNewAdmin();
         });
         JButton MainMenuButton = new JButton("Main Menu");
         MainMenuButton.setFont(mainFont);
@@ -122,7 +116,6 @@ public class AdminView extends JFrame {
         // -------------Top Buttons------------------
         JPanel TopButtonsPanel = new JPanel();
         TopButtonsPanel.setLayout(new FlowLayout());
-        TopButtonsPanel.add(SearchButton);
         TopButtonsPanel.add(MainMenuButton);
 
         // -------------Main Piece------------------
@@ -143,9 +136,51 @@ public class AdminView extends JFrame {
 
     }
 
+    public void DeleteMember(){
+        Administrator[] AdminArrayReplacement = new Administrator[AdminArray.length-1];
+        AdminArray[Position] = null;
+        
+        for (int i = 0; i < AdminArray.length; i++) {
+            if  (AdminArray[i] != null) {
+                AdminArrayReplacement[i] = AdminArray[i];
+            }
+            AdminArrayReplacement[i] = AdminArray[i];
+        }
+        AdminArray = AdminArrayReplacement;
+
+
+    }
+
+    public void ReplaceInfo(){
+        AdminArray[Position].SetId( Integer.parseInt(Admin_IDField.getText()) );
+        AdminArray[Position].SetName(Admin_nameField.getText());
+        AdminArray[Position].SetPassword(Admin_PasswordField.getText());
+        AdminArray[Position].SetContact(Admin_ContactField.getText());
+    }
+
     public void AddNewAdmin(){
-        MainController controller = new MainController();
-        controller.addNewAdmin( Admin_nameField.getText(), Admin_PasswordField.getText(), Admin_ContactField.getText());
+        try {
+            MainController controller = new MainController();
+            controller.addNewAdmin( Admin_nameField.getText(), Admin_PasswordField.getText(), Admin_ContactField.getText());
+        } catch (NullPointerException e) {
+            System.out.println("Error: " + e.getMessage());
+            AddFakeMember();
+        } 
+        
+    }
+
+    void AddFakeMember(){
+        Administrator[] AdminArrayReplacement = new Administrator[AdminArray.length+1];
+        Administrator admin = new Administrator();
+        admin.SetId(Integer.parseInt( Admin_IDField.getText()) );
+        admin.SetName(Admin_nameField.getText());
+        admin.SetPassword(Admin_PasswordField.getText());
+        admin.SetContact(Admin_ContactField.getText());
+        for (int i = 0; i < AdminArray.length; i++) {
+            AdminArrayReplacement[i] = AdminArray[i];
+        }
+        AdminArrayReplacement[AdminArray.length] = admin;
+        AdminArray = AdminArrayReplacement;
     }
 
     public void MoveToRecord(int num){
@@ -191,7 +226,7 @@ public class AdminView extends JFrame {
     }
 
     void GenerateFakeValues(){
-        AdminArray = new Administrator[40];
+        AdminArray = new Administrator[5];
         Administrator admin = new Administrator();
         admin.SetId(1);
         admin.SetName("Admin");
@@ -199,28 +234,28 @@ public class AdminView extends JFrame {
         admin.SetContact("Admin");
         AdminArray[0] = admin;
         Administrator admin1 = new Administrator();
-        admin.SetId(2);
-        admin.SetName("James");
-        admin.SetPassword("Parley");
-        admin.SetContact("Admin");
+        admin1.SetId(2);
+        admin1.SetName("James");
+        admin1.SetPassword("Parley");
+        admin1.SetContact("Admin");
         AdminArray[1] = admin1;
         Administrator admin2 = new Administrator();
-        admin.SetId(3);
-        admin.SetName("Jonathan");
-        admin.SetPassword("steel");
-        admin.SetContact("Admin");
+        admin2.SetId(3);
+        admin2.SetName("Jonathan");
+        admin2.SetPassword("steel");
+        admin2.SetContact("Admin");
         AdminArray[2] = admin2;
         Administrator admin3 = new Administrator();
-        admin.SetId(4);
-        admin.SetName("Avery");
-        admin.SetPassword("12345");
-        admin.SetContact("Admin");
+        admin3.SetId(4);
+        admin3.SetName("Avery");
+        admin3.SetPassword("12345");
+        admin3.SetContact("Admin");
         AdminArray[3] = admin3;
         Administrator admin4 = new Administrator();
-        admin.SetId(5);
-        admin.SetName("King");
-        admin.SetPassword("Of The wordl");
-        admin.SetContact("Admin");
+        admin4.SetId(5);
+        admin4.SetName("King");
+        admin4.SetPassword("Of The wordl");
+        admin4.SetContact("Admin");
         AdminArray[4] = admin4;
 
         QuickTextSet(0);
