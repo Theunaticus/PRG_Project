@@ -2,7 +2,7 @@ package GUI;
 
 import javax.swing.JFrame;
 
-import accessingdatamysql.DataObjects.*;
+import com.example.project.*;
 
 
 import javax.swing.*;
