@@ -9,7 +9,11 @@ import com.example.project.GUI.*;
 public class Application {
 
   public static void main(String[] args) {
-    System.setProperty("java.awt.headless", "false");
+
+    new MainController();
+
+    System.setProperty("java.awt.headless", "false"); //Disables headless
+
     SpringApplication.run(Application.class, args);
     MainFrame.main(args);
     //AdminView admin = new AdminView();
