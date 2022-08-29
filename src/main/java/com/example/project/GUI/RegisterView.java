@@ -35,6 +35,7 @@ public class RegisterView extends JFrame {
     JLabel Course_NameLabel = new JLabel("Course Name", JLabel.CENTER);
 
     public RegisterView() {
+        DisplayFirstRecord();
         // -------------Editable Items------------------
         Register_IDField.setFont(mainFont);
         Register_IDLabel.setFont(mainFont);
@@ -292,12 +293,12 @@ public class RegisterView extends JFrame {
         register3.SetCourse("Prg");
         RegisterArray[3] = register3;
         Register register4 = new Register();
-        register3.SetId(5);
-        register3.SetName("Olivar");
-        register3.SetPassword("hawian9827");
-        register3.SetAddress("1 east street");
-        register3.SetEmail("Olivar@gmail.com");
-        register3.SetCourse("Prg");
+        register4.SetId(5);
+        register4.SetName("Olivar");
+        register4.SetPassword("hawian9827");
+        register4.SetAddress("1 east street");
+        register4.SetEmail("Olivar@gmail.com");
+        register4.SetCourse("Prg");
         RegisterArray[4] = register4;
 
         QuickTextSet(0);
@@ -305,11 +306,34 @@ public class RegisterView extends JFrame {
 
     public static void QuickTextSet(int num){
         Register_IDField.setText(String.valueOf(RegisterArray[num].GetId()) );
-        Register_nameField.setText(RegisterArray[num].GetName());
-        Register_PasswordField.setText(RegisterArray[num].GetPassword());
-        Register_addressField.setText(RegisterArray[num].GetAddress());
-        Register_emailField.setText(RegisterArray[num].GetEmail());
-        Course_NameField.setText(RegisterArray[num].GetCourse());
+        if(RegisterArray[num].GetName()!=null){
+            Register_nameField.setText(RegisterArray[num].GetName());
+        }else {
+            Register_nameField.setText("");
+        }
+        if(RegisterArray[num].GetPassword()!=null){
+            Register_PasswordField.setText(RegisterArray[num].GetPassword());
+        }else {
+            Register_PasswordField.setText("");
+        }
+        if(RegisterArray[num].GetAddress()!=null){
+            Register_addressField.setText(RegisterArray[num].GetAddress());
+        }else {
+            Register_addressField.setText("");
+        }
+        if(RegisterArray[num].GetEmail()!=null){
+            Register_emailField.setText(RegisterArray[num].GetEmail());
+        }else {
+            Register_emailField.setText("");
+        }
+        if(RegisterArray[num].GetCourse()!=null){
+            Course_NameField.setText(RegisterArray[num].GetCourse());
+        }else {
+            Course_NameField.setText("");
+        }
+
+        
+
         
     }
        
