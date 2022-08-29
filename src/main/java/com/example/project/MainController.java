@@ -1,6 +1,7 @@
 package com.example.project;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller // This means that this class is a Controller
 @RequestMapping(path = "/command") // This means URL's start with /command (after Application path)
+@Component
 public class MainController {
 
   public  static MainController current;
@@ -18,11 +20,11 @@ public class MainController {
   }
 
   @Autowired
-  private RegisterRepository registerRepository;
+  public RegisterRepository registerRepository;
   @Autowired
-  private StudentRepository studentRepository;
+  public StudentRepository studentRepository;
   @Autowired
-  private AdministratorRepository adminRepository;
+  public AdministratorRepository adminRepository;
 
   @PostMapping(path = "/addregister") // Map ONLY POST Requests
   public @ResponseBody String addNewRegister(@RequestParam String name, @RequestParam String address,

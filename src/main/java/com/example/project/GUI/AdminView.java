@@ -10,12 +10,7 @@ import java.awt.*;
 import java.util.Iterator;
 
 public class AdminView extends JFrame {
-     Iterable<Administrator> AdminList = new Iterable<Administrator>() {
-            @Override
-            public Iterator<Administrator> iterator() {
-                return null;
-            }
-        };
+     
     
     static Administrator[] AdminArray = new Administrator[40];
     static int Position = 0;
@@ -158,6 +153,9 @@ public class AdminView extends JFrame {
             Position += num;
             if (Position < 0) {
                 Position = AdminArray.length - 1;
+                while(AdminArray[Position] == null){
+                    Position--;
+                }
             }else if(Position>=AdminArray.length-1){
                 Position = 0;
             }
@@ -169,20 +167,63 @@ public class AdminView extends JFrame {
         //a for each loop using the iterable AdminList
         //set the text fields to the first record in the list
         MainController mainController = new MainController();
-        
-        AdminList = mainController.getAllAdmins();
-        int count = 0;
-        if(AdminArray.length<=0){
-            System.out.println("No records");
-        }else{
-            for (Administrator admin : AdminList) {
-                AdminArray[count] = admin;
-                count++;
-            }
-            QuickTextSet(0);
-
-        }
+        try {
+            Iterable<Administrator> AdminList = mainController.getAllAdmins();
             
+            int count = 0;
+            if(AdminArray.length<=0){
+                System.out.println("No records");
+                GenerateFakeValues();
+            }else{
+                for (Administrator admin : AdminList) {
+                    AdminArray[count] = admin;
+                    count++;
+                }
+                QuickTextSet(0);
+
+            }
+        } catch (NullPointerException e) {
+            GenerateFakeValues();
+        }
+        
+        
+            
+    }
+
+    void GenerateFakeValues(){
+        AdminArray = new Administrator[40];
+        Administrator admin = new Administrator();
+        admin.SetId(1);
+        admin.SetName("Admin");
+        admin.SetPassword("Admin");
+        admin.SetContact("Admin");
+        AdminArray[0] = admin;
+        Administrator admin1 = new Administrator();
+        admin.SetId(2);
+        admin.SetName("James");
+        admin.SetPassword("Parley");
+        admin.SetContact("Admin");
+        AdminArray[1] = admin1;
+        Administrator admin2 = new Administrator();
+        admin.SetId(3);
+        admin.SetName("Jonathan");
+        admin.SetPassword("steel");
+        admin.SetContact("Admin");
+        AdminArray[2] = admin2;
+        Administrator admin3 = new Administrator();
+        admin.SetId(4);
+        admin.SetName("Avery");
+        admin.SetPassword("12345");
+        admin.SetContact("Admin");
+        AdminArray[3] = admin3;
+        Administrator admin4 = new Administrator();
+        admin.SetId(5);
+        admin.SetName("King");
+        admin.SetPassword("Of The wordl");
+        admin.SetContact("Admin");
+        AdminArray[4] = admin4;
+
+        QuickTextSet(0);
     }
 
     public static void QuickTextSet(int num){
