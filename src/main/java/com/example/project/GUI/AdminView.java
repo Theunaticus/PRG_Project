@@ -7,10 +7,17 @@ import com.example.project.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Iterator;
 
 public class AdminView extends JFrame {
-    static Iterable<Administrator> AdminList = MainController.getAllAdmins();
-    static Administrator[] AdminArray = new Administrator[(int) AdminList.spliterator().estimateSize()];
+     Iterable<Administrator> AdminList = new Iterable<Administrator>() {
+            @Override
+            public Iterator<Administrator> iterator() {
+                return null;
+            }
+        };
+    
+    static Administrator[] AdminArray = new Administrator[40];
     static int Position = 0;
 
     final private Font mainFont = new Font("Admin ID", Font.PLAIN, 20);
@@ -141,11 +148,12 @@ public class AdminView extends JFrame {
 
     }
 
-    public static void AddNewAdmin(){
-        MainController.addNewAdmin(Admin_nameField.getText(), Admin_PasswordField.getText(), Admin_ContactField.getText());
+    public void AddNewAdmin(){
+        MainController controller = new MainController();
+        controller.addNewAdmin( Admin_nameField.getText(), Admin_PasswordField.getText(), Admin_ContactField.getText());
     }
 
-    public static void MoveToRecord(int num){
+    public void MoveToRecord(int num){
         if (AdminArray.length > 0) {
             Position += num;
             if (Position < 0) {
@@ -157,9 +165,12 @@ public class AdminView extends JFrame {
         }
     }
 
-    public static void DisplayFirstRecord() {
+    public void DisplayFirstRecord() {
         //a for each loop using the iterable AdminList
         //set the text fields to the first record in the list
+        MainController mainController = new MainController();
+        
+        AdminList = mainController.getAllAdmins();
         int count = 0;
         if(AdminArray.length<=0){
             System.out.println("No records");
