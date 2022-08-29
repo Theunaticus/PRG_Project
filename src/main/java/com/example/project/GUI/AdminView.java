@@ -13,6 +13,7 @@ import java.awt.*;
 public class AdminView extends JFrame {
     static Iterable<Administrator> AdminList = MainController.getAllAdmins();
     static Administrator[] AdminArray = new Administrator[(int) AdminList.spliterator().estimateSize()];
+    static int Position = 0;
 
     final private Font mainFont = new Font("Admin ID", Font.PLAIN, 20);
     static JTextField Admin_IDField = new JTextField("Admin ID");
@@ -77,12 +78,12 @@ public class AdminView extends JFrame {
         JButton NextButton = new JButton("Next record");
         NextButton.setFont(mainFont);
         NextButton.addActionListener(arg0 -> {
-            /* Add SQL code to see if the first and last names are inside the database */
+            MoveToRecord(1);
         });
         JButton PreviousButton = new JButton("Previous record");
         PreviousButton.setFont(mainFont);
         PreviousButton.addActionListener(arg0 -> {
-            /* Add SQL code to see if the first and last names are inside the database */
+            MoveToRecord(-1);
         });
         JButton DeleteButton = new JButton("Delete record");
         DeleteButton.setFont(mainFont);
@@ -142,6 +143,22 @@ public class AdminView extends JFrame {
 
     }
 
+    public static void AddNewAdmin(){
+        MainController.addNewAdmin(Admin_nameField.getText(), Admin_PasswordField.getText(), Admin_ContactField.getText());
+    }
+
+    public static void MoveToRecord(int num){
+        if (AdminArray.length > 0) {
+            Position += num;
+            if (Position < 0) {
+                Position = AdminArray.length - 1;
+            }else if(Position>=AdminArray.length-1){
+                Position = 0;
+            }
+            QuickTextSet(Position);
+        }
+    }
+
     public static void DisplayFirstRecord() {
         //a for each loop using the iterable AdminList
         //set the text fields to the first record in the list
@@ -153,13 +170,17 @@ public class AdminView extends JFrame {
                 AdminArray[count] = admin;
                 count++;
             }
-            Admin_IDField.setText(AdminArray[0].GetId());
-            Admin_nameField.setText(AdminArray[0].GetName());
-            Admin_PasswordField.setText(AdminArray[0].GetPassword());
-            Admin_ContactField.setText(AdminArray[0].GetContact());
+            QuickTextSet(0);
 
         }
             
+    }
+
+    public static void QuickTextSet(int num){
+        Admin_IDField.setText(AdminArray[num].GetId());
+        Admin_nameField.setText(AdminArray[num].GetName());
+        Admin_PasswordField.setText(AdminArray[num].GetPassword());
+        Admin_ContactField.setText(AdminArray[num].GetContact());
     }
         
 

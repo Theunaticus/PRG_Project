@@ -1,6 +1,7 @@
 package com.example.project.GUI;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class MainFrame extends JFrame {
 

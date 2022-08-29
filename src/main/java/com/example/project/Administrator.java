@@ -14,8 +14,8 @@ public class Administrator {
     private String password;
     private String contact;
 
-    public  int GetId ()    {
-        return  Admin_id;
+    public  String GetId ()    {
+        return String.valueOf(Admin_id) ;
     }
 
     public  void    SetId (int _ID)    {

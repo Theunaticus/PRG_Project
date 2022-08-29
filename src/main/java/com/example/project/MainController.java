@@ -1,6 +1,7 @@
 package com.example.project;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties.Admin;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.project.GUI.*;
 
 @Controller // This means that this class is a Controller
 @RequestMapping(path = "/command") // This means URL's start with /command (after Application path)
@@ -23,7 +25,7 @@ public class MainController {
   @Autowired
   private StudentRepository studentRepository;
   @Autowired
-  private AdministratorRepository adminRepository;
+  private static AdministratorRepository adminRepository;
 
   @PostMapping(path = "/addregister") // Map ONLY POST Requests
   public @ResponseBody String addNewRegister(@RequestParam String name, @RequestParam String address,
@@ -53,7 +55,8 @@ public class MainController {
   }
 
   @PostMapping(path = "/addadmin") // Map ONLY POST Requests
-  public @ResponseBody String addNewAdmin(@RequestParam String name, @RequestParam String password,
+  public @ResponseBody
+  static String addNewAdmin(@RequestParam String name, @RequestParam String password,
       @RequestParam String contact) {
 
     Administrator n = new Administrator();
@@ -77,8 +80,13 @@ public class MainController {
   }
 
   @GetMapping(path = "/alladmins")
-  public @ResponseBody Iterable<Administrator> getAllAdmins() {
+  public @ResponseBody
+  static Iterable<Administrator> getAllAdmins() {
     // This returns a JSON or XML with the admins
     return adminRepository.findAll();
+  }
+
+  public void DeleteAdmin ()  {
+    adminRepository.deleteAll();
   }
 }
