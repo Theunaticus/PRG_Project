@@ -32,16 +32,10 @@ public class Entrance extends JFrame {
         panel.add(tfFirstName);
         panel.add(tfLastName);
 
-        JButton button = new JButton("Click Me");
+        JButton button = new JButton("Log In");
         button.setFont(mainFont);
         button.addActionListener(arg0 -> {
-            welcomeLabel.setText("Welcome " + tfFirstName.getText() + " " + tfLastName.getText());
-
-            MainMenu mainMenu = new MainMenu();
-
-            mainMenu.setVisible(true);
-
-            this.setVisible(false);
+            Login();
         });
 
         JButton ClearAllButton = new JButton("Clear All");
@@ -71,6 +65,17 @@ public class Entrance extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setVisible(true);
 
+    }
+
+    void Login(){
+        if(tfFirstName.getText().equals("Admin") && tfLastName.getText().equals("Admin")){
+            MainMenu mainMenu = new MainMenu();
+            mainMenu.setVisible(true);
+            this.setVisible(false);
+        }
+        else{
+            JOptionPane.showMessageDialog(this, "Invalid Login");
+        }
     }
 
 }
