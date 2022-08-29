@@ -7,6 +7,6 @@ import com.example.project.Student;
 // This will be AUTO IMPLEMENTED by Spring into a Bean called studentRepository
 // CRUD refers Create, Read, Update, Delete
 
-public interface StudentRepository extends CrudRepository<StudentView, Integer> {
+public interface StudentRepository extends CrudRepository<Student, Integer> {
 
 }

@@ -3,7 +3,7 @@ package com.example.project;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import com.example.project.Administrator;
+import com.example.project.GUI.*;
 
 @SpringBootApplication
 public class Application {

@@ -8,6 +8,6 @@ import com.example.project.Register;
 // CRUD refers Create, Read, Update, Delete
 // Cool
 
-public interface RegisterRepository extends CrudRepository<RegisterView, Integer> {
+public interface RegisterRepository extends CrudRepository<Register, Integer> {
 
 }

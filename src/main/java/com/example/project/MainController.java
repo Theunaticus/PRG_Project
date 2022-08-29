@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import GUI;
+import com.example.project.GUI.*;
 
 @Controller // This means that this class is a Controller
 @RequestMapping(path = "/command") // This means URL's start with /command (after Application path)
@@ -30,7 +30,7 @@ public class MainController {
   public @ResponseBody String addNewRegister(@RequestParam String name, @RequestParam String address,
       @RequestParam String email, @RequestParam String password, @RequestParam String course_name) {
 
-    RegisterView n = new RegisterView();
+    Register n = new Register();
     n.SetName(name);
     n.SetAddress(address);
     n.SetEmail(email);
@@ -44,7 +44,7 @@ public class MainController {
   public @ResponseBody String addNewStudent(@RequestParam String name, @RequestParam String address,
       @RequestParam String email, @RequestParam String password) {
 
-    StudentView n = new StudentView();
+    Student n = new Student();
     n.SetName(name);
     n.SetAddress(address);
     n.SetEmail(email);
@@ -66,24 +66,20 @@ public class MainController {
   }
 
   @GetMapping(path = "/allstudent")
-  public @ResponseBody Iterable<StudentView> getAllStudents() {
+  public @ResponseBody Iterable<Student> getAllStudents() {
     // This returns a JSON or XML with the students
     return studentRepository.findAll();
   }
 
   @GetMapping(path = "/allregister")
-  public @ResponseBody Iterable<RegisterView> getAllRegisters() {
+  public @ResponseBody Iterable<Register> getAllRegisters() {
     // This returns a JSON or XML with the registers
     return registerRepository.findAll();
   }
 
   @GetMapping(path = "/alladmins")
-  public @ResponseBody Iterable<RegisterView> getAllAdmins() {
+  public @ResponseBody Iterable<Administrator> getAllAdmins() {
     // This returns a JSON or XML with the admins
     return adminRepository.findAll();
-  }
-
-  public void DeleteAdmin ()  {
-    adminRepository.Delete();
   }
 }
