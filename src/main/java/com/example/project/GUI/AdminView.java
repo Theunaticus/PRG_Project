@@ -2,6 +2,8 @@ package com.example.project.GUI;
 
 import javax.swing.JFrame;
 
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties.Admin;
+
 import com.example.project.*;
 
 
@@ -9,23 +11,24 @@ import javax.swing.*;
 import java.awt.*;
 
 public class AdminView extends JFrame {
-    Iterable<Administrator> AdminList = new MainController().getAllAdmins();
+    static Iterable<Administrator> AdminList = MainController.getAllAdmins();
+    static Administrator[] AdminArray = new Administrator[(int) AdminList.spliterator().estimateSize()];
 
     final private Font mainFont = new Font("Admin ID", Font.PLAIN, 20);
-    JTextField Admin_IDField = new JTextField("Admin ID");
+    static JTextField Admin_IDField = new JTextField("Admin ID");
     JLabel Admin_IDLabel = new JLabel("Admin ID", JLabel.CENTER);
 
-    JTextField Admin_nameField = new JTextField("Admin name");
+    static JTextField Admin_nameField = new JTextField("Admin name");
     JLabel Admin_nameLabel = new JLabel("Admin name", JLabel.CENTER);
 
-    JTextField Admin_PasswordField = new JTextField("Admin Password");
+    static JTextField Admin_PasswordField = new JTextField("Admin Password");
     JLabel Admin_PasswordLabel = new JLabel("Admin Password", JLabel.CENTER);
 
-    JTextField Admin_ContactField = new JTextField("Admin Contact");
+    static JTextField Admin_ContactField = new JTextField("Admin Contact");
     JLabel Admin_ContactLabel = new JLabel("Admin Contact", JLabel.CENTER);
 
     public AdminView() {
-
+        DisplayFirstRecord();
         // -------------Editable Items------------------
         Admin_IDField.setFont(mainFont);
         Admin_IDLabel.setFont(mainFont);
@@ -140,9 +143,26 @@ public class AdminView extends JFrame {
     }
 
     public static void DisplayFirstRecord() {
-        MainController controller = new MainController();
-        controller.getAllAdmins();
+        //a for each loop using the iterable AdminList
+        //set the text fields to the first record in the list
+        int count = 0;
+        if(AdminArray.length<=0){
+            System.out.println("No records");
+        }else{
+            for (Administrator admin : AdminList) {
+                AdminArray[count] = admin;
+                count++;
+            }
+            Admin_IDField.setText(AdminArray[0].GetId());
+            Admin_nameField.setText(AdminArray[0].GetName());
+            Admin_PasswordField.setText(AdminArray[0].GetPassword());
+            Admin_ContactField.setText(AdminArray[0].GetContact());
 
+        }
+            
     }
+        
 
 }
+
+
