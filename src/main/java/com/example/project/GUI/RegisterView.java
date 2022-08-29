@@ -10,7 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class RegisterView extends JFrame {
-    private static final JTextComponent Register_PasswordField = null;
+    //private static final JTextComponent Register_PasswordField = null;
     static Register[] RegisterArray = new Register[40];
     static int Position = 0;
 
@@ -181,7 +181,7 @@ public class RegisterView extends JFrame {
     public void ReplaceInfo(){
         RegisterArray[Position].SetId( Integer.parseInt(Register_IDField.getText()) );
         RegisterArray[Position].SetName(Register_nameField.getText());
-        RegisterArray[Position].SetPassword(Register_PasswordField.getText());
+        RegisterArray[Position].SetPassword(Register_passwordField.getText());
         RegisterArray[Position].SetAddress(Register_addressField.getText());
         RegisterArray[Position].SetEmail(Register_emailField.getText());
         RegisterArray[Position].SetCourse(Course_NameField.getText());
@@ -191,7 +191,7 @@ public class RegisterView extends JFrame {
         try {
             MainController controller = new MainController();
             controller.addNewRegister( Register_nameField.getText(), Register_addressField.getText(), Register_emailField.getText(),
-                    Register_PasswordField.getText(), Course_NameField.getText() );
+            Register_passwordField.getText(), Course_NameField.getText() );
         } catch (NullPointerException e) {
             System.out.println("Error: " + e.getMessage());
             AddFakeMember();
@@ -204,7 +204,7 @@ public class RegisterView extends JFrame {
         Register register = new Register();
         register.SetId( Integer.parseInt(Register_IDField.getText()) );
         register.SetName(Register_nameField.getText());
-        register.SetPassword(Register_PasswordField.getText());
+        register.SetPassword(Register_passwordField.getText());
         register.SetAddress(Register_addressField.getText());
         register.SetEmail(Register_emailField.getText());
         register.SetCourse(Course_NameField.getText());
@@ -312,9 +312,9 @@ public class RegisterView extends JFrame {
             Register_nameField.setText("");
         }
         if(RegisterArray[num].GetPassword()!=null){
-            Register_PasswordField.setText(RegisterArray[num].GetPassword());
+            Register_passwordField.setText(RegisterArray[num].GetPassword());
         }else {
-            Register_PasswordField.setText("");
+            Register_passwordField.setText("");
         }
         if(RegisterArray[num].GetAddress()!=null){
             Register_addressField.setText(RegisterArray[num].GetAddress());
